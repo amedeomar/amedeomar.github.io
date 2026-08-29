@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Padel Companion — accesso Google</title>
+<style>
+  body {
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+    margin: 0; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: #111; color: #eee; text-align: center; padding: 2rem;
+  }
+  code { color: #9ad; word-break: break-all; }
+</style>
+</head>
+<body>
+<main>
+  <p id="stato">Un attimo, ti mando a Google…</p>
+</main>
+<script>
+/*
+ * Trampolino verso Google, e serve per una ragione sola.
+ *
+ * Google rilascia il `refresh_token` — quello che fa durare il collegamento oltre
+ * l'ora — solo se glielo si chiede con `access_type=offline`, e a un account che ha
+ * gia' acconsentito solo con `prompt=consent`. Quei due parametri vanno nell'URL di
+ * autorizzazione, e li' non riusciamo a metterli:
+ *
+ *   - il componente `Auth` della Settings App di Zepp costruisce l'URL attaccando i
+ *     propri parametri con un `?` invece che con un `&`. Un `authorizeUrl` che abbia
+ *     gia' una query si spezza, e Google risponde «Missing required parameter:
+ *     client_id». Provato al telefono il 29 agosto 2026.
+ *   - passarli come props al componente non serve: le props che non conosce non le
+ *     inoltra. Provato subito dopo, e si vede dal fatto che il consenso non ricompare.
+ *
+ * Da qui questa pagina: la si mette come `authorizeUrl`, Zepp le attacca i suoi
+ * parametri con il suo `?` — che qui va benissimo, perche' e' il primo — e lei rimanda
+ * a Google aggiungendo i due che mancano.
+ *
+ * Non tocca nulla di sensibile: non vede il token, non vede il segreto del client, e
+ * il `redirect_uri` resta quello di Zepp. Fa una cosa sola, e in chiaro.
+ */
+(function () {
+  var GOOGLE = 'https://accounts.google.com/o/oauth2/v2/auth';
+  var q = location.search.replace(/^\?/, '');
+  var stato = document.getElementById('stato');
+
+  if (!q) {
+    stato.innerHTML = 'Questa pagina serve all\'app <b>Padel Companion</b> per il login '
+      + 'con Google, e da sola non fa niente.';
+    return;
+  }
+
+  // Se un domani Zepp li mandasse gia' lui, non si raddoppiano.
+  if (q.indexOf('access_type=') < 0) q += '&access_type=offline';
+  if (q.indexOf('prompt=') < 0) q += '&prompt=consent';
+
+  location.replace(GOOGLE + '?' + q);
+}());
+</script>
+</body>
+</html>
