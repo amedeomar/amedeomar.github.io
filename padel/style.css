@@ -1,0 +1,22 @@
+/*
+ * Foglio comune alle pagine pubbliche di Padel Companion.
+ * Vive su GitHub Pages accanto a index.html, privacy.html e auth.html; il sorgente
+ * versionato sta qui in docs/, e le due copie vanno tenute allineate a mano.
+ * Colori presi dall'app: fondo #111, ocra #e8a72c, blu #4a7dff.
+ */
+:root { color-scheme: dark; }
+body {
+  font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+  margin: 0; background: #111; color: #e8e6e3;
+}
+main { max-width: 40rem; margin: 0 auto; padding: 3rem 1.5rem 5rem 1.5rem; }
+h1 { font-size: 1.7rem; line-height: 1.25; margin: 0 0 .3rem 0; color: #fff; }
+h2 { font-size: 1.1rem; margin: 2.4rem 0 .6rem 0; color: #e8a72c; }
+p, li { color: #cfcbc6; }
+a { color: #4a7dff; }
+.occhiello { color: #9b9797; font-size: .95rem; margin: 0 0 2.5rem 0; }
+.nota { color: #9b9797; font-size: .9rem; margin-top: 3rem;
+        border-top: 1px solid #2a2a2a; padding-top: 1rem; }
+ul { padding-left: 1.2rem; }
+li { margin: .35rem 0; }
+strong { color: #fff; }
