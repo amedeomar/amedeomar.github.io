@@ -10,7 +10,7 @@
 <main>
 
 <h1>Privacy Policy</h1>
-<p class="occhiello">Padel Companion — last updated 30 August 2026</p>
+<p class="occhiello">Padel Companion — last updated 3 September 2026</p>
 
 <p><strong>Padel Companion has no servers, no accounts of its own, no analytics, no
 advertising and no third-party trackers.</strong> Nothing you do in the app is sent to
@@ -23,15 +23,25 @@ you choose to connect it.</p>
 watch's local storage, so that it survives closing the app or restarting the watch. It
 is overwritten when a new match starts, and uninstalling the app deletes it.</p>
 
+<p>Beside it the watch keeps a short queue of finished matches, at most twenty, waiting
+to be handed to the phone, and a fingerprint of the last score delivered, so that the
+same result is not sent twice. Each match leaves the queue as soon as it has gone.</p>
+
 <h2>Watch permissions</h2>
 
+<p>The app declares two, and asks for nothing else:</p>
+
 <ul>
-<li><strong>Local storage</strong> — to save the match in progress, as described above.</li>
+<li><strong>Local storage</strong> — to save the match in progress and the queue, as
+described above.</li>
 <li><strong>Device information</strong> — to read the screen size at startup, so the
 layout suits the model in use. The value is neither stored nor transmitted.</li>
-<li><strong>Bluetooth messaging</strong> — to hand finished matches to the Zepp app on
-your phone, which is the only part of the chain that has network access.</li>
 </ul>
+
+<p>Finished matches reach your phone over the Bluetooth link the Zepp app already
+maintains with your watch, which needs no permission of its own. There they are picked up
+by this app's own service inside the Zepp app — the only part of the chain that has
+network access, and only towards Google, as described below.</p>
 
 <p>The app reads no heart rate, no step count, no GPS position and no other sensor
 data. Besides the screen, the only hardware it uses is the vibration motor.</p>
@@ -44,9 +54,16 @@ The app requests a single permission, <code>drive.file</code>, which grants acce
 invisible to it, including files you created and files created by other apps.</p>
 
 <p>With that permission the app creates one spreadsheet, named
-<em>Padel Companion — Matches</em>, and writes your match results into it: date,
-duration, sets, games, points, break points and the scoring mode. The spreadsheet is
-yours, in your Drive, and you may edit or delete it at any time.</p>
+<em>Padel Companion — Matches</em>, and writes one row per match into it: date, duration,
+set scores, winner, games, points, break points, the scoring mode, an internal match id
+and the time of the last change. While a match is still being played it rewrites its own
+row rather than adding a new one.</p>
+
+<p><strong>It writes no names, no addresses and no location.</strong> Three columns —
+<em>Players</em>, <em>Where</em> and <em>Notes</em> — are left to you, and the app never
+touches them; the only text it can put there is the placeholder <code>BLU / OCRA</code>,
+and only while <em>Players</em> is still empty. The spreadsheet is yours, in your Drive,
+and you may edit or delete it at any time.</p>
 
 <h2>Where the Google credentials live</h2>
 
